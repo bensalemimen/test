@@ -4,20 +4,26 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                echo 'Récupération du code...'
+                git branch: 'main', url: 'https://github.com/bensalemimen/test.git'
             }
         }
 
-        stage('Run Python Script') {
+        stage('Build') {
             steps {
-                echo 'Exécution du script Python 🚀'
-                bat 'python main.py'
+                echo 'Compilation du projet...'
+                sh 'mvn clean install'
             }
         }
 
-        stage('Success') {
+        stage('Test') {
             steps {
-                echo '✅ Pipeline terminé avec succès !'
+                echo 'Exécution des tests...'
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                echo 'Déploiement terminé ✅'
             }
         }
     }
